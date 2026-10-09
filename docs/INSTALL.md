@@ -1,6 +1,6 @@
 # OfficeDocs — online single-node installation
 
-Use a dedicated server matching the selected CPU architecture. The initial OfficeDocs distribution uses the approved ShimoDocs packages unchanged; installer screens and signed package names may keep the original product name.
+Use a dedicated server matching the selected CPU architecture. The initial OfficeDocs distribution uses the approved ShimoDocs packages unchanged; installer screens and package names may keep the original product name.
 
 The commands below show **amd64**. For **arm64**, use `mdp-installer-arm64-v1.8.1-rc12-global` in place of `mdp-installer-amd64-v1.8.1-rc12-global`. Both architecture-specific packaged guides specify Ubuntu 24.04 LTS and the same evaluation resources below. Do not rename or modify the product archive.
 
