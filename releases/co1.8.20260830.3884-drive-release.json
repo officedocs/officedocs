@@ -1,0 +1,23 @@
+{
+  "product": "OfficeDocs",
+  "release": "co1.8.20260830.3884-drive-release",
+  "installer_version": "v1.8.1-rc12-global",
+  "deployment_mode": "online-single-node",
+  "source_release": "https://github.com/shimodocs/shimodocs/releases/tag/co1.8.20260830.3884-drive-release",
+  "assets": [
+    {
+      "architecture": "amd64",
+      "filename": "mdp-installer-amd64-v1.8.1-rc12-global.zip",
+      "size_bytes": 357349821,
+      "sha256": "92084f925d22422da093e53b1c17e9f6154c464d7971ba049d24e8bf626a70a5",
+      "public_download_url": "https://github.com/shimodocs/shimodocs/releases/download/co1.8.20260830.3884-drive-release/mdp-installer-amd64-v1.8.1-rc12-global.zip"
+    },
+    {
+      "architecture": "arm64",
+      "filename": "mdp-installer-arm64-v1.8.1-rc12-global.zip",
+      "size_bytes": 325376298,
+      "sha256": "19923608c0d2fbda8b1e7954508906321f53bbff2b539def9b39fcb42cfba623",
+      "public_download_url": "https://github.com/shimodocs/shimodocs/releases/download/co1.8.20260830.3884-drive-release/mdp-installer-arm64-v1.8.1-rc12-global.zip"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+*.zip
+*.tar.gz
+.DS_Store
+.env*
+seo/
+overseas/
+.omx/
+HANDOFF.local.md
