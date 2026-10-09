@@ -28,6 +28,16 @@ OfficeDocs is an independent international brand using the same underlying produ
 
 ## Documentation and support
 
+The complete deployment and operations documentation is available here in English, German and Japanese:
+
+| Language | Documentation index | Deployment and operations | Quick start |
+| --- | --- | --- | --- |
+| English | [Documentation](docs/README.md) | [Full contents](docs/deployment/README.md) | [Quick start](docs/deployment/getting-started/quick-start.md) |
+| Deutsch | [Dokumentation](docs/de/README.md) | [Inhaltsverzeichnis](docs/de/deployment/README.md) | [Schnellstart](docs/de/deployment/getting-started/quick-start.md) |
+| 日本語 | [ドキュメント](docs/ja/README.md) | [目次](docs/ja/deployment/README.md) | [クイックスタート](docs/ja/deployment/getting-started/quick-start.md) |
+
+These guides cover resource planning, deployment, middleware, licence and tenant management, operations, monitoring, backup and troubleshooting. The [website documentation](https://officedocs.io/docs) provides the same guides with searchable navigation. The installation guide above remains the packaged single-node evaluation entry point. Product commands and legacy technical identifiers are intentionally preserved.
+
 - [Quick start](https://officedocs.io/docs/deployment/getting-started/quick-start)
 - [System requirements](https://officedocs.io/docs/deployment/system-requirements)
 - [Deployment documentation](https://officedocs.io/docs)

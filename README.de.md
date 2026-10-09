@@ -14,3 +14,9 @@ OfficeDocs ist eine selbst gehostete Suite für die gemeinsame Bearbeitung von D
 Produktversion: `co1.8.20260830.3884-drive-release`; Installer: `v1.8.1-rc12-global`. OfficeDocs ist eine eigenständige internationale Marke, die dasselbe zugrunde liegende Produkt wie ShimoDocs verwendet. Die ursprünglichen Pakete werden unverändert verwendet. Technische Dateinamen und einzelne Oberflächentexte können weiterhin ShimoDocs nennen. Die Pakete sind in den [öffentlichen Releases dieses Repositorys](https://github.com/officedocs/officedocs/releases/tag/co1.8.20260830.3884-drive-release) und über die Downloadseite verfügbar. Prüfsummen bestätigen die Datei-Integrität, nicht eine erfolgreich getestete Installation.
 
 [Dokumentation](https://officedocs.io/de/docs) · [Installationsanleitung (Englisch)](docs/INSTALL.md) · [Kontakt](https://officedocs.io/contact-sales)
+
+## Dokumentation im Repository
+
+[Dokumentationsübersicht](docs/de/README.md) · [Vollständiges Inhaltsverzeichnis](docs/de/deployment/README.md) · [Schnellstart](docs/de/deployment/getting-started/quick-start.md) · [Systemanforderungen](docs/de/deployment/system-requirements.md)
+
+Die Dokumentation umfasst Bereitstellung, Middleware, Lizenz- und Mandantenverwaltung, Betrieb und Fehlerbehebung. [English](docs/README.md) · [日本語](docs/ja/README.md).

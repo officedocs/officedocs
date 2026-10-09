@@ -14,3 +14,9 @@ OfficeDocsは、ドキュメント、表計算、プレゼンテーションな�
 製品リリースは`co1.8.20260830.3884-drive-release`、インストーラーは`v1.8.1-rc12-global`です。OfficeDocsは、ShimoDocsと同じ基盤製品を使用する独立した海外向けブランドです。承認された従来のパッケージを変更せず配布するため、技術的なファイル名や一部画面にはShimoDocsの名称が残ります。パッケージは[このリポジトリの公開リリース](https://github.com/officedocs/officedocs/releases/tag/co1.8.20260830.3884-drive-release)とダウンロードページから取得できます。チェックサムの一致はファイルの整合性を示すもので、実際の導入成功を保証しません。
 
 [ドキュメント](https://officedocs.io/ja/docs) · [導入手順（英語）](docs/INSTALL.md) · [お問い合わせ](https://officedocs.io/contact-sales)
+
+## リポジトリ内のドキュメント
+
+[ドキュメント一覧](docs/ja/README.md) · [全目次](docs/ja/deployment/README.md) · [クイックスタート](docs/ja/deployment/getting-started/quick-start.md) · [システム要件](docs/ja/deployment/system-requirements.md)
+
+導入、ミドルウェア、ライセンスとテナント管理、運用、トラブルシューティングを収録しています。[English](docs/README.md) · [Deutsch](docs/de/README.md)。
