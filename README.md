@@ -24,7 +24,7 @@ This repository contains release information and installation documentation. It 
 - [Machine-readable release manifest](releases/co1.8.20260830.3884-drive-release.json)
 - [OfficeDocs release archive](https://github.com/officedocs/officedocs/releases/tag/co1.8.20260830.3884-drive-release)
 
-The initial OfficeDocs distribution reuses the approved ShimoDocs release unchanged. File names, signatures, technical commands and some interface labels retain their original names. The public download page uses the original public release while this repository is private; the manifest records the provenance. Installation packages are release assets, not files in Git history.
+OfficeDocs is an independent international brand using the same underlying product as ShimoDocs. The initial OfficeDocs distribution reuses the approved ShimoDocs release unchanged. File names, signatures, technical commands and some interface labels retain their original names. This public repository provides the OfficeDocs release assets; the website download page also provides verified downloads, and the manifest records their provenance. Installation packages are release assets, not files in Git history.
 
 ## Documentation and support
 
@@ -33,4 +33,4 @@ The initial OfficeDocs distribution reuses the approved ShimoDocs release unchan
 - [Deployment documentation](https://officedocs.io/docs)
 - [Talk through your deployment](https://officedocs.io/contact-sales)
 
-The verified support and licence address remains **support.global@shimo.im** during the brand transition. Never include passwords, private keys or licence contents in a public issue.
+The current support and licence address is **support.global@shimo.im**. Never include passwords, private keys or licence contents in a public issue.
