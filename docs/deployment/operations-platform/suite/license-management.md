@@ -6,11 +6,9 @@
 >
 > License management is used to obtain the server machine code for OfficeDocs Suite, create and issue licenses, and view the current license status, license scope, and running machine information. When activating for the first time, the license can be updated on this page upon expiration or when the server node changes. After OfficeDocs Suite writes the license, you must check the verification results before issuing the license; simply writing or temporarily saving it does not make the license officially effective.
 
-> If you are a paying customer, please send the copied machine code to
-- the technical support team. We will generate the corresponding license based on the machine code and send the license information to you. If you want to try OfficeDocs for free, please visit
-- Official Website License Application **OfficeDocs fill in the application information and paste the machine code.**: https://shimo.net/license After submission, the system will automatically generate a trial license. Please copy and complete the writing within 10 minutes of generation. If it expires, please reapply.
-- 1. Visit the license management at the top
-## .
+Request an OfficeDocs license by sending all server machine codes and your requirements to [support.global@shimo.im](mailto:support.global@shimo.im). The free perpetual plan supports up to five users. Support will confirm the applicable license and activation instructions.
+
+## 1. Access License Management
 
 1. Log in to **MDP Operation & Maintenance Platform**.
 2. Select **OfficeDocs Suite** in the left navigation bar.

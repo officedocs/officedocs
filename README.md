@@ -14,6 +14,8 @@ This repository contains release information and installation documentation. It 
 4. Request a licence from [support.global@shimo.im](mailto:support.global@shimo.im). The free perpetual plan covers up to **5 users**. The Team plan is **$5 per user per month**, with **20% off** annual billing. See [pricing](https://officedocs.io/pricing) for the current offer.
 5. Before putting real work on the system, verify sign-in, two-person editing, save and reopen, access permissions, backup and restore on your deployment. Download integrity is not proof that a deployment has passed these checks.
 
+Use the current [installation guide](docs/INSTALL.md) for installer access and licence instructions; it supersedes the unchanged ZIP’s bundled instructions on these points. Keep the installer management port private and use an SSH tunnel before entering credentials. The public packages cover online All-in-One deployment; standard Kubernetes, high availability and offline deployment require matching delivery materials confirmed with support.
+
 ## Current release
 
 - Product release: `co1.8.20260830.3884-drive-release`

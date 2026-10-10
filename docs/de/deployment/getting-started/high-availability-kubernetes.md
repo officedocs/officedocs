@@ -2,13 +2,17 @@
 
 [← OfficeDocs Suite Bereitstellungsdokumentation](../README.md)
 
+OfficeDocs Suite hochverfügbar auf mehreren Kubernetes-Knoten bereitstellen: Topologie, passende Pakete und Installationsablauf vorbereiten.
+
+> Die öffentlichen ZIP-Pakete unterstützen ausschließlich die **Online-Installation auf einem All-in-One-Einzelknoten mit k3s**. Für Standard-Kubernetes, Hochverfügbarkeit und Offline-Installation sind passende Liefermaterialien erforderlich, darunter das Produktpaket ohne k3s sowie bei Offline-Installation die passenden Image-Pakete. Diese Materialien sind nicht im öffentlichen ZIP enthalten. Bestätigen Sie vor Verwendung dieser Anleitungen Paket, Architektur, Version und Bereitstellungsplan mit [support.global@shimo.im](mailto:support.global@shimo.im).
+
 ## 1. Anwendbare Szenarien 
 
 > [!TIP] 
 > 
 > K8s Cluster-Bereitstellung ist für Produktionsumgebungen geeignet. Im Vergleich zur Einzelmaschinenbereitstellung ist die Cluster-Bereitstellung besser für Langzeitbetrieb, Skalierung und Hochverfügbarkeits-Szenarien geeignet. 
 
-- Für Produktionsumgebungen wird empfohlen zu verwenden `3 master   N worker`. 
+- Für Produktionsumgebungen wird empfohlen zu verwenden `3 master + N worker`.
 - Mindestens 3 Server vorbereiten, alle 3 als Master. Arbeiter können zunächst Master-Knoten wiederverwenden und später je nach Umfang die Arbeiter erhöhen. 
 
 ## 2. Vorbereitungen vor der Bereitstellung 
@@ -34,7 +38,7 @@
 | Artikel | Anforderung |
 | --- | --- |
 | Anzahl der Server | 3 oder mehr |
-| Empfohlene Rollen | `3 master   N worker` |
+| Empfohlene Rollen | `3 master + N worker` |
 | CPU pro Knoten | 16 Kerne oder mehr |
 | Speicher pro Knoten | 32 GB oder mehr |
 | Systemfestplatte | Root `/` Partition 100 GB oder mehr |
@@ -102,17 +106,23 @@ Starten Sie die Installer-Webseite:
 nohup /root/mdp-installer-amd64 server --port 18080 &
 ```
 
-Zugriff über Browser: 
+Der HTTP-Installer verarbeitet privilegierte SSH-Zugangsdaten der Knoten, einschließlich `root`-Passwort oder privatem Schlüssel. Port `18080` darf nicht direkt im öffentlichen Internet erreichbar sein. Beschränken Sie SSH und Verwaltungszugriffe in Host-Firewall und Cloud-Sicherheitsgruppe auf vertrauenswürdige Verwaltungsquellen; erlauben Sie erforderlichen Knotenverkehr nur zwischen den geplanten Knoten. Öffnen Sie auf einem vertrauenswürdigen Verwaltungscomputer einen SSH-Tunnel und lassen Sie ihn geöffnet:
 
-```text
-http://<INSTALL_NODE_IP>:18080
+```bash
+ssh -N -L 127.0.0.1:18080:127.0.0.1:18080 root@<NODE_IP>
 ```
+
+Ersetzen Sie `<NODE_IP>` durch die tatsächlich erreichbare SSH-Adresse des Installationsknotens.
+
+Öffnen Sie danach `http://127.0.0.1:18080/` im Browser dieses Computers. Der Tunnel schützt den Zugriff auf die HTTP-Verwaltungsoberfläche; er fügt dem Installer kein TLS hinzu. Für Geschäfts-Domain/IP und SSH-Knotenfelder sind weiterhin die tatsächlich erreichbaren Adressen zu verwenden, niemals die Tunneladresse `127.0.0.1`.
+
+Stoppen Sie nach Bereitstellung und Abnahme den Installer-Prozess, schließen Sie den SSH-Tunnel und entfernen Sie temporäre Zugriffsregeln für den Verwaltungsport. Die bereitgestellten Geschäftsdienste bleiben in Betrieb.
 
 ## 4. Installation über die Webseite
 
 ### 4.1 Hochladen des Produktinstallationspakets
 
-1. Öffnen Sie `http://<INSTALL_NODE_IP>:18080`.
+1. Öffnen Sie `http://127.0.0.1:18080`.
 2. Laden Sie das OfficeDocs Suite Installationspaket hoch.
 3. Nach Abschluss des Uploads klicken Sie `Continue`.
 
@@ -317,8 +327,7 @@ tail -f /root/nohup.out
 Überprüfen Sie Folgendes:
 
 - Ob der Installateurprozess noch läuft.
-- Ob Port `18080` durch eine Firewall oder Sicherheitsgruppe blockiert ist.
-- Ob die vom Browser aufgerufene IP INSTALL_NODE_IP.
+- Prüfen Sie, ob der SSH-Tunnel läuft und der Browser `http://127.0.0.1:18080/` verwendet; prüfen Sie den Installer-Listener auf dem Server und Firewall-Regeln für vertrauenswürdige Quellen.
 
 Sie können auf dem Server ausführen:
 

@@ -67,7 +67,7 @@ For scenarios requiring formal deployment, long-term operation, high availabilit
 | Item | Requirement |
 | --- | --- |
 | Number of servers | 3 or more |
-| Recommended role | `3 master   N worker` |
+| Recommended role | `3 master + N worker` |
 | CPU per node | 16 cores or more |
 | Memory per node | 32 GB or more |
 | System disk per node | Root directory `/` partition 100 GB or more |

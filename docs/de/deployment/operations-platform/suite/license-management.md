@@ -4,13 +4,12 @@
 
 > [!TIP]
 >
-> Die Lizenzverwaltung wird verwendet, um den Server-Maschinen-Code für OfficeDocs Suitezu erhalten, Lizenzen zu schreiben und zu veröffentlichen sowie den aktuellen Lizenzstatus, den Lizenzumfang und die laufenden Maschineninformationen einzusehen. Für die erstmalige Aktivierung, 
+> Die Lizenzverwaltung wird verwendet, um den Server-Maschinen-Code für OfficeDocs Suite zu erhalten, Lizenzen zu schreiben und zu veröffentlichen sowie den aktuellen Lizenzstatus, den Lizenzumfang und die laufenden Maschineninformationen einzusehen. Für die erstmalige Aktivierung,
 > Lizenzverlängerung nach Ablauf oder wenn sich die Serverknoten ändern, können Sie die OfficeDocs Suite Lizenz über diese Seite aktualisieren.
 
 > Nach dem Schreiben der Lizenz müssen Sie die Überprüfungsergebnisse prüfen, bevor Sie die Lizenz veröffentlichen. Nur das Schreiben oder vorübergehende Speichern macht die Lizenz nicht offiziell wirksam.
-- Wenn Sie ein zahlender Kunde sind, senden Sie bitte den kopierten Maschinen-Code an das OfficeDocs Technische Support-Team. Wir generieren die entsprechende Lizenz basierend auf dem Maschinen-Code und senden Ihnen die Lizenzinformationen zu.
-- Wenn Sie eine kostenlose Testversion möchten, gehen Sie bitte zu **OfficeDocs Offizielle Website Lizenzanwendung**: https://shimo.net/license , um die Antragsinformationen auszufüllen und den Maschinen-Code einzufügen.
-- Nach Einreichung generiert das System automatisch eine Testlizenz. Bitte kopieren und vervollständigen Sie das Schreiben innerhalb von 10 Minuten nach der Erstellung. Wenn sie abläuft, bewerben Sie sich bitte erneut.
+Fordern Sie die OfficeDocs-Lizenz mit allen Server-Maschinencodes und Ihren Anforderungen bei [support.global@shimo.im](mailto:support.global@shimo.im) an. Der dauerhaft kostenlose Tarif unterstützt bis zu fünf Benutzer. Der Support bestätigt die passende Lizenz und die Aktivierungsschritte.
+
 ## 1. Zugriff auf Lizenzverwaltung
 
 1. Melden Sie sich bei der **MDP Operations-Plattform**.

@@ -5,6 +5,8 @@ Use these guidelines to plan, install, configure, operate, and troubleshoot the 
 > [!NOTE]
 > The commands, package names, versions, addresses, and resource values shown in the guide are for example purposes only, unless otherwise explicitly stated. Please use the values provided with your distribution and deployment environment.
 
+> The public ZIP packages support **online All-in-One single-node installation with k3s only**. Standard Kubernetes, high-availability, and offline deployments require matching delivery materials, including the non-k3s product package and, for offline installation, the appropriate image packages. These materials are not included in the public ZIP. Before following those deployment guides, confirm the package, architecture, version, and deployment plan with [support.global@shimo.im](mailto:support.global@shimo.im).
+
 ## Plan Your Deployment
 
 - [System Requirements](system-requirements.md)

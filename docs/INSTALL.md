@@ -4,6 +4,8 @@ Use a dedicated server matching the selected CPU architecture. The initial Offic
 
 The commands below show **amd64**. For **arm64**, use `mdp-installer-arm64-v1.8.1-rc12-global` in place of `mdp-installer-amd64-v1.8.1-rc12-global`. Both architecture-specific packaged guides specify Ubuntu 24.04 LTS and the same evaluation resources below. Do not rename or modify the product archive.
 
+The public ZIP packages support **online All-in-One single-node installation with k3s only**. Standard Kubernetes, high-availability, and offline deployments require matching delivery materials, including the non-k3s product package and, for offline installation, the appropriate image packages. These materials are not included in the public ZIP. Before following those deployment guides, confirm the package, architecture, version, and deployment plan with [support.global@shimo.im](mailto:support.global@shimo.im).
+
 ## Download and verify
 
 Choose your architecture at [officedocs.io/download](https://officedocs.io/download), compare the ZIP checksum with [SHA256SUMS](../SHA256SUMS), and extract it. On Linux, run `sha256sum <downloaded-zip>`; on macOS, run `shasum -a 256 <downloaded-zip>`. Compare the full value before running the installer.
@@ -20,7 +22,7 @@ Choose your architecture at [officedocs.io/download](https://officedocs.io/downl
 - **OS / arch**: Ubuntu 24.04 LTS (minimal install), CPU architecture **amd64** or **arm64** — must match the downloaded package.
 - **Spec**: 16 Core / 32 GB RAM / 100 GB SSD.
 - **Access**: root SSH login (or a user with deployment privileges).
-- **Ports**: 22 (SSH), 18080 (installer web UI), 80 & 443 (service access) must be free.
+- **Ports**: 22 (SSH), 18080 (installer web UI), 80 & 443 (service access) must be available. Allow only the required traffic from trusted sources: SSH from the administration computer and installation node as needed, management port `18080` through the SSH tunnel, and business ports `80`/`443` according to the intended service audience. Do not open all listed ports to the public internet.
 - **Network**: the server must reach the internet (online install downloads packages and images).
 - Do **not** pre-install Docker / Kubernetes on the server (it interferes with the installer's checks).
 - Do **not** put `/root`, `/var`, or `/tmp` on separate partitions.
@@ -63,7 +65,14 @@ On success the terminal prints a **Local** and a **Network** address.
 
 **5. Open the web UI**
 
-Open the **Network** address in a browser, e.g. `http://<NODE_IP>:18080/`.
+The HTTP installer will receive node SSH credentials with deployment privileges. Do not expose its management port to the public internet. Restrict SSH and management access to trusted administration sources using the host firewall and cloud security group. From your administration computer, open a separate terminal and keep this tunnel running:
+
+```bash
+ssh -N -L 127.0.0.1:18080:127.0.0.1:18080 root@<NODE_IP>
+```
+
+Open `http://127.0.0.1:18080/` in that computer’s browser. This protects HTTP management traffic through SSH; it does not enable TLS in the installer. Use the real server domain/IP for business access and node SSH configuration, not `127.0.0.1`.
+
 Keep the installer process running throughout the installation.
 
 **6. Deploy in the web UI**
@@ -85,6 +94,8 @@ When the page shows **installation complete**, record and secure:
 - Office Suite: `http(s)://<domain>/`
 - MDP Ops Platform: `http(s)://<domain>/mdp/`
 - Initial account and temporary password — **change the password on first login**.
+
+After deployment and acceptance, stop the installer process, close the SSH tunnel, and remove temporary access rules for the management port. Do not stop the deployed business services.
 
 ## Notes
 

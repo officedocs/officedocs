@@ -5,6 +5,8 @@ Verwenden Sie diese Anleitungen, um eine private Bereitstellung der OfficeDocs S
 > [!NOTE]
 > Befehle, Paketnamen, Versionen, Adressen und Ressourcenzahlen, die in den Anleitungen gezeigt werden, sind Beispiele, sofern nicht ausdrücklich anders angegeben. Verwenden Sie die Werte, die mit Ihrer Version und der Bereitstellungsumgebung geliefert werden.
 
+> Die öffentlichen ZIP-Pakete unterstützen ausschließlich die **Online-Installation auf einem All-in-One-Einzelknoten mit k3s**. Für Standard-Kubernetes, Hochverfügbarkeit und Offline-Installation sind passende Liefermaterialien erforderlich, darunter das Produktpaket ohne k3s sowie bei Offline-Installation die passenden Image-Pakete. Diese Materialien sind nicht im öffentlichen ZIP enthalten. Bestätigen Sie vor Verwendung dieser Anleitungen Paket, Architektur, Version und Bereitstellungsplan mit [support.global@shimo.im](mailto:support.global@shimo.im).
+
 ## Planen Sie Ihre Bereitstellung
 
 - [Systemanforderungen](system-requirements.md)

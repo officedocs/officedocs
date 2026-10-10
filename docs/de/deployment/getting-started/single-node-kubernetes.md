@@ -2,6 +2,10 @@
 
 [← OfficeDocs Suite Bereitstellungsdokumentation](../README.md)
 
+OfficeDocs Suite auf einem Standard-Kubernetes-Einzelknoten bereitstellen: passendes Produktpaket vorbereiten, installieren und prüfen.
+
+> Die öffentlichen ZIP-Pakete unterstützen ausschließlich die **Online-Installation auf einem All-in-One-Einzelknoten mit k3s**. Für Standard-Kubernetes, Hochverfügbarkeit und Offline-Installation sind passende Liefermaterialien erforderlich, darunter das Produktpaket ohne k3s sowie bei Offline-Installation die passenden Image-Pakete. Diese Materialien sind nicht im öffentlichen ZIP enthalten. Bestätigen Sie vor Verwendung dieser Anleitungen Paket, Architektur, Version und Bereitstellungsplan mit [support.global@shimo.im](mailto:support.global@shimo.im).
+
 ## 1. Anwendbare Szenarien
 - **K8s Ein-Knoten-Bereitstellung**:
     - Geeignet für leichte, kleine Teams, den Einsatz von weniger als 200 Personen, PoC, Demonstrationen, Funktionsüberprüfung und Kurzzeittests.
@@ -86,7 +90,7 @@ Bestätigen Sie die folgenden Ergebnisse:
 | `18080/TCP` | Installer-Webseite | 
 | `80/TCP` oder `443/TCP` | OfficeDocs Suite Zugangsbereich | 
 
-Wenn der Server eine Firewall oder Sicherheitsgruppe aktiviert hat, öffnen Sie bitte im Voraus die oben genannten Ports. 
+Erlauben Sie nur erforderlichen Verkehr aus vertrauenswürdigen Quellen: SSH vom Verwaltungscomputer und bei Bedarf vom Installationsknoten, Verwaltungsport `18080` über den SSH-Tunnel sowie Geschäftsports `80`/`443` entsprechend der vorgesehenen Nutzergruppe. Öffnen Sie nicht alle aufgeführten Ports für das öffentliche Internet.
 
 ## 4. Hochladen von Installationstools und -paketen 
 
@@ -137,11 +141,17 @@ Wenn Sie möchten, dass der Installer im Hintergrund ausgeführt wird, können S
 nohup /root/mdp-installer-amd64 server > /root/mdp-installer.log 2>&1 &
 ```
 
-Zugriff über Browser: 
+Der HTTP-Installer verarbeitet privilegierte SSH-Zugangsdaten der Knoten, einschließlich `root`-Passwort oder privatem Schlüssel. Port `18080` darf nicht direkt im öffentlichen Internet erreichbar sein. Beschränken Sie SSH und Verwaltungszugriffe in Host-Firewall und Cloud-Sicherheitsgruppe auf vertrauenswürdige Verwaltungsquellen; erlauben Sie erforderlichen Knotenverkehr nur zwischen den geplanten Knoten. Öffnen Sie auf einem vertrauenswürdigen Verwaltungscomputer einen SSH-Tunnel und lassen Sie ihn geöffnet:
 
-```text
-http://<INSTALL_NODE_IP>:18080
+```bash
+ssh -N -L 127.0.0.1:18080:127.0.0.1:18080 root@<NODE_IP>
 ```
+
+Ersetzen Sie `<NODE_IP>` durch die tatsächlich erreichbare SSH-Adresse des Installationsknotens.
+
+Öffnen Sie danach `http://127.0.0.1:18080/` im Browser dieses Computers. Der Tunnel schützt den Zugriff auf die HTTP-Verwaltungsoberfläche; er fügt dem Installer kein TLS hinzu. Für Geschäfts-Domain/IP und SSH-Knotenfelder sind weiterhin die tatsächlich erreichbaren Adressen zu verwenden, niemals die Tunneladresse `127.0.0.1`.
+
+Stoppen Sie nach Bereitstellung und Abnahme den Installer-Prozess, schließen Sie den SSH-Tunnel und entfernen Sie temporäre Zugriffsregeln für den Verwaltungsport. Die bereitgestellten Geschäftsdienste bleiben in Betrieb.
 
 ## 5. Installation über Webseite
 
@@ -340,8 +350,7 @@ tail -f /root/nohup.out
 Überprüfen Sie Folgendes:
 
 - Ob der Installateurprozess noch läuft.
-- Ob Port `18080` durch eine Firewall oder Sicherheitsgruppe blockiert ist.
-- Ob die vom Browser aufgerufene IP INSTALL_NODE_IP.
+- Prüfen Sie, ob der SSH-Tunnel läuft und der Browser `http://127.0.0.1:18080/` verwendet; prüfen Sie den Installer-Listener auf dem Server und Firewall-Regeln für vertrauenswürdige Quellen.
 
 Sie können Folgendes auf dem Server ausführen:
 

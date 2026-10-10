@@ -2,6 +2,8 @@
 
 [← OfficeDocs Suite Deployment Documentation](../README.md)
 
+> The public ZIP packages support **online All-in-One single-node installation with k3s only**. Standard Kubernetes, high-availability, and offline deployments require matching delivery materials, including the non-k3s product package and, for offline installation, the appropriate image packages. These materials are not included in the public ZIP. Before following those deployment guides, confirm the package, architecture, version, and deployment plan with [support.global@shimo.im](mailto:support.global@shimo.im).
+
 ## 1. Applicable Scenarios
 - **K8s Single-Node Deployment**:
     - Suitable for lightweight small teams, small-scale use with fewer than 200 people, PoC, demo, feature verification, and short-term testing.
@@ -86,7 +88,7 @@ Confirm the following results:
 | `18080/TCP` | Installer webpage |
 | `80/TCP` or `443/TCP` | OfficeDocs Suite access entry |
 
-If the server has a firewall or security group enabled, please open the above ports in advance.
+Allow only the required traffic from trusted sources: SSH from the administration computer and installation node as needed, management port `18080` through the SSH tunnel, and business ports `80`/`443` according to the intended service audience. Do not open all listed ports to the public internet.
 
 ## 4. Upload Installation Tools and Packages
 
@@ -137,11 +139,17 @@ If you want the installer to run in the background, you can use:
 nohup /root/mdp-installer-amd64 server > /root/mdp-installer.log 2>&1 &
 ```
 
-Browser access: 
+The HTTP installer collects privileged node SSH credentials, including the `root` password or private key. Do not expose port `18080` directly to the public internet. Restrict SSH and management access in the host firewall and cloud security group to trusted administration sources; permit required inter-node traffic only between the planned nodes. From a trusted administration computer, keep an SSH tunnel open:
 
-```text
-http://<INSTALL_NODE_IP>:18080
+```bash
+ssh -N -L 127.0.0.1:18080:127.0.0.1:18080 root@<NODE_IP>
 ```
+
+Replace `<NODE_IP>` with the installation node’s real reachable SSH address.
+
+Then open `http://127.0.0.1:18080/` in that computer’s browser. The tunnel protects access to the HTTP management interface; it does not add TLS to the installer. Business domain/IP and node SSH fields must still use their real reachable addresses, never the tunnel address `127.0.0.1`.
+
+After deployment and acceptance, stop the installer process, close the SSH tunnel, and remove temporary access rules for the management port. Do not stop the deployed business services.
 
 ## 5. Install via Web Page
 
@@ -339,8 +347,7 @@ tail -f /root/nohup.out
 Check the following:
 
 - Whether the installer process is still running.
-- Whether the port `18080` is blocked by the firewall or security group.
-- Whether the IP accessed by the browser is INSTALL_NODE_IP.
+- Check that the SSH tunnel is running and the browser uses `http://127.0.0.1:18080/`; verify the server-side installer listener and trusted-source firewall rules.
 
 You can perform the following on the server:
 

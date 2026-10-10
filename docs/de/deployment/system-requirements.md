@@ -68,7 +68,7 @@ Für Szenarien, die einen offiziellen Start, einen langfristigen Betrieb, hohe V
 | Artikel | Anforderung |
 | --- | --- |
 | Anzahl der Server | 3 oder mehr |
-| Empfohlene Rollen | `3 master   N worker` |
+| Empfohlene Rollen | `3 master + N worker` |
 | CPU pro Knoten | 16 Kerne oder mehr |
 | Speicher pro Knoten | 32 GB oder mehr |
 | Systemfestplatte pro Knoten | Root `/` Partition 100 GB oder mehr |

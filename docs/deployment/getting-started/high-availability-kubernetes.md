@@ -2,6 +2,8 @@
 
 [← OfficeDocs Suite Deployment Documentation](../README.md)
 
+> The public ZIP packages support **online All-in-One single-node installation with k3s only**. Standard Kubernetes, high-availability, and offline deployments require matching delivery materials, including the non-k3s product package and, for offline installation, the appropriate image packages. These materials are not included in the public ZIP. Before following those deployment guides, confirm the package, architecture, version, and deployment plan with [support.global@shimo.im](mailto:support.global@shimo.im).
+
 ## 1. Applicable Scenarios 
 
 > [!TIP] 
@@ -102,17 +104,23 @@ Launch the installer webpage:
 nohup /root/mdp-installer-amd64 server --port 18080 &
 ```
 
-Browser access: 
+The HTTP installer collects privileged node SSH credentials, including the `root` password or private key. Do not expose port `18080` directly to the public internet. Restrict SSH and management access in the host firewall and cloud security group to trusted administration sources; permit required inter-node traffic only between the planned nodes. From a trusted administration computer, keep an SSH tunnel open:
 
-```text
-http://<INSTALL_NODE_IP>:18080
+```bash
+ssh -N -L 127.0.0.1:18080:127.0.0.1:18080 root@<NODE_IP>
 ```
+
+Replace `<NODE_IP>` with the installation node’s real reachable SSH address.
+
+Then open `http://127.0.0.1:18080/` in that computer’s browser. The tunnel protects access to the HTTP management interface; it does not add TLS to the installer. Business domain/IP and node SSH fields must still use their real reachable addresses, never the tunnel address `127.0.0.1`.
+
+After deployment and acceptance, stop the installer process, close the SSH tunnel, and remove temporary access rules for the management port. Do not stop the deployed business services.
 
 ## 4. Install via Web Page
 
 ### 4.1 Upload Product Installation Package
 
-1. Open `http://<INSTALL_NODE_IP>:18080`.
+1. Open `http://127.0.0.1:18080`.
 2. Upload the OfficeDocs Suite installation package.
 3. After the upload is complete, click `Continue`.
 
@@ -316,8 +324,7 @@ tail -f /root/nohup.out
 Check the following: 
 
 - Whether the installer process is still running. 
-- Whether the port is blocked by a firewall or security group `18080`. 
-- Whether the browser's access IP is INSTALL_NODE_IP. 
+- Check that the SSH tunnel is running and the browser uses `http://127.0.0.1:18080/`; verify the server-side installer listener and trusted-source firewall rules.
 
 You can perform the following on the server:
 

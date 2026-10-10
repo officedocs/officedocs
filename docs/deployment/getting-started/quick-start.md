@@ -2,6 +2,8 @@
 
 [← OfficeDocs Suite Deployment Documentation](../README.md)
 
+> The public ZIP packages support **online All-in-One single-node installation with k3s only**. Standard Kubernetes, high-availability, and offline deployments require matching delivery materials, including the non-k3s product package and, for offline installation, the appropriate image packages. These materials are not included in the public ZIP. Before following those deployment guides, confirm the package, architecture, version, and deployment plan with [support.global@shimo.im](mailto:support.global@shimo.im).
+
 > [!TIP]
 >
 > This article explains how to use `mdp-installer` to quickly deploy a new OfficeDocs Suite environment.
@@ -39,7 +41,7 @@ Before starting, please confirm:
 - The server meets the current deployment specifications; it is recommended to use a minimal installation of Ubuntu 24.04 LTS.
 - The root partition and data space meet the current deployment requirements, and the data directory has been determined.
 - The server time and timezone are correct, and time synchronization is normal.
-- The installation node's `18080/TCP` port can be accessed using a browser from a computer.
+- Prepare SSH tunnel access to the installer’s `18080/TCP` port from a trusted administration computer.
 - The server can access the internet to download deployment packages and image resources online.
 - If business access uses a domain name, the domain name resolution has been completed in advance (optional).
 
@@ -131,11 +133,17 @@ If started in background mode, you can run the following command to view the ins
 cat nohup.out
 ```
 
-Open `Network` in your browser and visit the address displayed by the terminal, for example:
+The HTTP installer collects privileged node SSH credentials, including the `root` password or private key. Do not expose port `18080` directly to the public internet. Restrict SSH and management access in the host firewall and cloud security group to trusted administration sources; permit required inter-node traffic only between the planned nodes. From a trusted administration computer, keep an SSH tunnel open:
 
-```text
-http://<INSTALL_NODE_IP>:18080/
+```bash
+ssh -N -L 127.0.0.1:18080:127.0.0.1:18080 root@<NODE_IP>
 ```
+
+Replace `<NODE_IP>` with the installation node’s real reachable SSH address.
+
+Then open `http://127.0.0.1:18080/` in that computer’s browser. The tunnel protects access to the HTTP management interface; it does not add TLS to the installer. Business domain/IP and node SSH fields must still use their real reachable addresses, never the tunnel address `127.0.0.1`.
+
+After deployment and acceptance, stop the installer process, close the SSH tunnel, and remove temporary access rules for the management port. Do not stop the deployed business services.
 
 > During the installation process, please keep the installer process running. Do not close the installer process or stop the current service.
 
@@ -332,8 +340,7 @@ After completing all the above checks, indicate that this quick deployment is co
 Check in order:
 
 - Whether the installer process is still running.
-- Whether the access address uses the actual IP of the installation node or a resolvable domain name.
-- Whether port `18080/TCP` is open.
+- Check that the SSH tunnel is running and the browser uses `http://127.0.0.1:18080/`; verify the server-side installer listener and trusted-source firewall rules.
 - Whether the network between the computer running the browser and the installation node is connected.
 
 ### 2. Distribution Package Verification Failed

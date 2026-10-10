@@ -2,13 +2,17 @@
 
 [← OfficeDocs Suite Bereitstellungsdokumentation](../README.md)
 
+Diese Schnellstartanleitung führt durch die Online-Installation der OfficeDocs Suite mit dem öffentlichen All-in-One-Paket auf einem einzelnen Server.
+
+> Die öffentlichen ZIP-Pakete unterstützen ausschließlich die **Online-Installation auf einem All-in-One-Einzelknoten mit k3s**. Für Standard-Kubernetes, Hochverfügbarkeit und Offline-Installation sind passende Liefermaterialien erforderlich, darunter das Produktpaket ohne k3s sowie bei Offline-Installation die passenden Image-Pakete. Diese Materialien sind nicht im öffentlichen ZIP enthalten. Bestätigen Sie vor Verwendung dieser Anleitungen Paket, Architektur, Version und Bereitstellungsplan mit [support.global@shimo.im](mailto:support.global@shimo.im).
+
 > [!TIP]
 >
 > Dieser Artikel beschreibt, wie man das `mdp-installer` verwendet, um schnell eine frische Umgebung von OfficeDocs Suite.
 >
 > Dieser Artikel ist für die **All-in-One-Einzelknoten-Online-Installation** Szenario, geeignet für die Erstinstallation, Produkterfahrung, Funktionsüberprüfung und Übung des Bereitstellungsprozesses. Nach Abschluss dieses Artikels können Sie die OfficeDocs Suite Geschäftszugangsadresse und die MDP Operations-Plattform-Adresse erhalten.
 
-> Die IP-Adressen, Installationspaketnamen VERSIONund Verzeichnisse auf der Seite dienen als Beispiele. Während der tatsächlichen Bereitstellung beachten Sie bitte die aktuelle Umgebung und die gelieferten Materialien.
+> Die IP-Adressen, Installationspaketnamen VERSION und Verzeichnisse auf der Seite dienen als Beispiele. Während der tatsächlichen Bereitstellung beachten Sie bitte die aktuelle Umgebung und die gelieferten Materialien.
 
 ## 1. Übersicht über den Bereitstellungsprozess
 
@@ -39,7 +43,7 @@ Bitte bestätigen Sie vor dem Start:
 - Der Server erfüllt die aktuellen Bereitstellungsspezifikationen; es wird empfohlen, eine minimal installierte Ubuntu 24.04 zu verwenden LTS.
 - Die Root-Partition und der Datenbereich entsprechen den aktuellen Bereitstellungsanforderungen, und das Datenverzeichnis wurde bestimmt.
 - Die Serverzeit und Zeitzone sind korrekt, und die Zeitsynchronisierung ist normal.
-- Der Computer mit dem Browser kann auf Port `18080/TCP` des Installationsknotens zugreifen.
+- Bereiten Sie den Zugriff auf den Installer-Port `18080/TCP` über einen SSH-Tunnel von einem vertrauenswürdigen Verwaltungscomputer vor.
 - Der Server kann auf das Internet zugreifen, um Bereitstellungspakete und Image-Ressourcen online herunterzuladen.
 - Wenn der Geschäftsverkehr Domainnamen verwendet, wurde die Namensauflösung im Voraus abgeschlossen (optional).
 
@@ -131,11 +135,17 @@ Wenn im Hintergrundmodus gestartet, können Sie den folgenden Befehl ausführen,
 cat nohup.out
 ```
 
-Öffnen Sie die `Network` Adresse, die im Terminal in einem Browser angezeigt wird, zum Beispiel:
+Der HTTP-Installer verarbeitet privilegierte SSH-Zugangsdaten der Knoten, einschließlich `root`-Passwort oder privatem Schlüssel. Port `18080` darf nicht direkt im öffentlichen Internet erreichbar sein. Beschränken Sie SSH und Verwaltungszugriffe in Host-Firewall und Cloud-Sicherheitsgruppe auf vertrauenswürdige Verwaltungsquellen; erlauben Sie erforderlichen Knotenverkehr nur zwischen den geplanten Knoten. Öffnen Sie auf einem vertrauenswürdigen Verwaltungscomputer einen SSH-Tunnel und lassen Sie ihn geöffnet:
 
-```text
-http://<INSTALL_NODE_IP>:18080/
+```bash
+ssh -N -L 127.0.0.1:18080:127.0.0.1:18080 root@<NODE_IP>
 ```
+
+Ersetzen Sie `<NODE_IP>` durch die tatsächlich erreichbare SSH-Adresse des Installationsknotens.
+
+Öffnen Sie danach `http://127.0.0.1:18080/` im Browser dieses Computers. Der Tunnel schützt den Zugriff auf die HTTP-Verwaltungsoberfläche; er fügt dem Installer kein TLS hinzu. Für Geschäfts-Domain/IP und SSH-Knotenfelder sind weiterhin die tatsächlich erreichbaren Adressen zu verwenden, niemals die Tunneladresse `127.0.0.1`.
+
+Stoppen Sie nach Bereitstellung und Abnahme den Installer-Prozess, schließen Sie den SSH-Tunnel und entfernen Sie temporäre Zugriffsregeln für den Verwaltungsport. Die bereitgestellten Geschäftsdienste bleiben in Betrieb.
 
 > Bitte halten Sie während der Installation den Installationsprozess aktiv. Schließen Sie den Installationsprozess nicht oder stoppen Sie den aktuellen Dienst nicht.
 
@@ -332,8 +342,7 @@ Nachdem alle oben genannten Prüfungen erfolgreich abgeschlossen wurden, zeigt d
 Überprüfen Sie in folgender Reihenfolge:
 
 - Ob der Installateurprozess noch läuft.
-- Ob die Zugriffsadresse die tatsächliche IP des Installationsknotens oder einen auflösbaren Domainnamen verwendet.
-- Ob Port `18080/TCP` wurde geöffnet.
+- Prüfen Sie, ob der SSH-Tunnel läuft und der Browser `http://127.0.0.1:18080/` verwendet; prüfen Sie den Installer-Listener auf dem Server und Firewall-Regeln für vertrauenswürdige Quellen.
 - Ob das Netzwerk zwischen dem Computer mit dem Browser und dem Installationsknoten verbunden ist.
 
 ### 2. Verteilungspaket-Verifizierung fehlgeschlagen
